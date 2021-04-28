@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebGallery", "WebGallery\WebGallery.csproj", "{8004B7FF-1634-4630-AB24-E30C2D96764F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebGallery", "WebGallery\WebGallery.csproj", "{8004B7FF-1634-4630-AB24-E30C2D96764F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Client", "Wpf.Client\Wpf.Client.csproj", "{7F36AF59-C8D0-4904-B75D-A04AAA4D0465}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8004B7FF-1634-4630-AB24-E30C2D96764F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8004B7FF-1634-4630-AB24-E30C2D96764F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8004B7FF-1634-4630-AB24-E30C2D96764F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F36AF59-C8D0-4904-B75D-A04AAA4D0465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F36AF59-C8D0-4904-B75D-A04AAA4D0465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F36AF59-C8D0-4904-B75D-A04AAA4D0465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F36AF59-C8D0-4904-B75D-A04AAA4D0465}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
