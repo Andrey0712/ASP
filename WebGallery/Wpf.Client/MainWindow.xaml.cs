@@ -25,17 +25,17 @@ namespace Wpf.Client
     public partial class MainWindow : Window
     {
         String URI = "http://localhost:64098/api/Girls/search";
-        public ObservableCollection<GirlVM> girls = new ObservableCollection<GirlVM>();
+        //public ObservableCollection<GirlVM> girls = new ObservableCollection<GirlVM>();
         public MainWindow()
         {
              InitializeComponent();
             WebClient webClient = new WebClient();
-            string json = webClient.DownloadString(URI);
-            List<GirlVM> getgirls = JsonConvert.DeserializeObject<List<GirlVM>>(json);
-            girls = new ObservableCollection<GirlVM>(getgirls);
+            string reply = webClient.DownloadString(URI);
+            List<GirlVM> add_girls = JsonConvert.DeserializeObject<List<GirlVM>>(reply);
+            dgSimple.ItemsSource = new ObservableCollection<GirlVM>(add_girls);
 
-            dgSimple.ItemsSource = girls;
-            //string reply = webClient.DownloadString(URI);
+             
+            
            
         }
     }
