@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebGallery.Models;
 
 namespace Wpf.Client
 {
@@ -21,12 +24,19 @@ namespace Wpf.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        String URI = "http://localhost:64098/api/Girls/search";
+        public ObservableCollection<GirlVM> girls = new ObservableCollection<GirlVM>();
         public MainWindow()
         {
-            String URI = "http://localhost:64098/api/Girls/search";
+             InitializeComponent();
             WebClient webClient = new WebClient();
-            string reply = webClient.DownloadString(URI);
-            InitializeComponent();
+            string json = webClient.DownloadString(URI);
+            List<GirlVM> getgirls = JsonConvert.DeserializeObject<List<GirlVM>>(json);
+            girls = new ObservableCollection<GirlVM>(getgirls);
+
+            dgSimple.ItemsSource = girls;
+            //string reply = webClient.DownloadString(URI);
+           
         }
     }
 }

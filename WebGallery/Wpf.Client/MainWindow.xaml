@@ -7,6 +7,33 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <DataGrid Name="dgSimple" AutoGenerateColumns="false" Grid.Column="0" Grid.Row="0" Background="Pink">
+            <DataGrid.Resources>
+                <Style TargetType="DataGrid">
+                    <Setter Property="Foreground" Value="Purple" />
+                    <Setter Property="BorderBrush" Value="DarkViolet" />
+                    <Setter Property="Background" Value="LightPink" />
+                    <Setter Property="FontSize" Value="12" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns >
 
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Возраст" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="Вес" Binding="{Binding Weight}" />
+                <DataGridTextColumn Header="Рост" Binding="{Binding Height}"/>
+                
+
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate >
+                <DataTemplate>
+                    <DockPanel Background="YellowGreen">
+
+                        <Image DockPanel.Dock="Left" Source="{Binding Image}" Height="64" Margin="10" />
+                        
+                    </DockPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
     </Grid>
 </Window>
