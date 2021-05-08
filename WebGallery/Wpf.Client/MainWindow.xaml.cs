@@ -22,25 +22,25 @@ namespace Wpf.Client
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window//https://coderoad.ru/41441089/%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-JsonConvert-DeserializeObject-%D0%B4%D0%BB%D1%8F-%D0%B4%D0%B5%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-Json
     {
         String URI = "http://localhost:64098/api/Girls/search";
         
         public MainWindow()
         {
              InitializeComponent();
-           // AddGirlDataGrid();//подгружаем при инициализации
+           //AddGirlDataGrid();//подгружаем при инициализации
 
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)//асинхронный запуск
+        private  void Window_Loaded(object sender, RoutedEventArgs e)//асинхронный запуск
         {
             
-            await Task.Run(() => AddGirlDataGrid());
-
+            
+            AddGirlDataGridAsync();
 
         }
-        
+       
         public void AddGirlDataGrid()
         {
             WebClient webClient = new WebClient();
@@ -49,10 +49,11 @@ namespace Wpf.Client
 
             List<GirlVM> add_girls = JsonConvert.DeserializeObject<List<GirlVM>>(reply);
             dgSimple.ItemsSource = new ObservableCollection<GirlVM>(add_girls);
+
         }
-        //public Task AddGirlDataGridAsync()
-        //{
-        //    return Task.Run(() => AddGirlDataGrid());
-        //}
+        public Task AddGirlDataGridAsync()
+        {
+            return Task.Run(() => AddGirlDataGrid());
+        }
     }
 }
