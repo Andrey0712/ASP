@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <DataGrid Name="dgSimple" AutoGenerateColumns="false" Grid.Column="0" Grid.Row="0" Background="Pink">
             <DataGrid.Resources>
@@ -22,7 +22,7 @@
                 <DataGridTextColumn Header="Возраст" Binding="{Binding Age}"/>
                 <DataGridTextColumn Header="Вес" Binding="{Binding Weight}" />
                 <DataGridTextColumn Header="Рост" Binding="{Binding Height}"/>
-                
+
 
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate >

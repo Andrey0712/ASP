@@ -25,18 +25,34 @@ namespace Wpf.Client
     public partial class MainWindow : Window
     {
         String URI = "http://localhost:64098/api/Girls/search";
-        //public ObservableCollection<GirlVM> girls = new ObservableCollection<GirlVM>();
+        
         public MainWindow()
         {
              InitializeComponent();
+           // AddGirlDataGrid();//подгружаем при инициализации
+
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)//асинхронный запуск
+        {
+            
+            await Task.Run(() => AddGirlDataGrid());
+
+
+        }
+        
+        public void AddGirlDataGrid()
+        {
             WebClient webClient = new WebClient();
             string reply = webClient.DownloadString(URI);
+
+
             List<GirlVM> add_girls = JsonConvert.DeserializeObject<List<GirlVM>>(reply);
             dgSimple.ItemsSource = new ObservableCollection<GirlVM>(add_girls);
-
-             
-            
-           
         }
+        //public Task AddGirlDataGridAsync()
+        //{
+        //    return Task.Run(() => AddGirlDataGrid());
+        //}
     }
 }
