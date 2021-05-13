@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,11 @@ namespace WebGallery
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-            });
+            })
+            .AddEntityFrameworkStores<EFDataContext>()//хто контекст
+                .AddDefaultTokenProviders();//хто провайдер
+
+
             services.AddControllers();
 
             services.AddSwaggerGen();
@@ -54,17 +59,19 @@ namespace WebGallery
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            string fotoGirls = "foto";
-            var dir = Path.Combine(Directory.GetCurrentDirectory(), fotoGirls);
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-            app.UseStaticFiles(
-                new StaticFileOptions
-                {
-                    FileProvider = new PhysicalFileProvider(dir),//создаем FileProvider которій возвращает фотку по пути RequestPath
-                    RequestPath ="/img"
-                });
+            //string fotoGirls = "foto";
+            //var dir = Path.Combine(Directory.GetCurrentDirectory(), fotoGirls);
+            //if (!Directory.Exists(dir))
+            //    Directory.CreateDirectory(dir);
+            //app.UseStaticFiles(
+            //    new StaticFileOptions
+            //    {
+            //        FileProvider = new PhysicalFileProvider(dir),//создаем FileProvider которій возвращает фотку по пути RequestPath
+            //        RequestPath ="/img"
+            //    });
 
+
+            app.ApplyMigrations();
             app.UseStaticFiles();
 
 
