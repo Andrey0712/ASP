@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -29,39 +30,83 @@ namespace Wpf.Client
         
         public MainWindow()
         {
-             InitializeComponent();
-            //AddGirlDataGrid();//подгружаем при инициализации
-            using (WebClient webClient = new WebClient())
+            // отправляем запрос по вебу
+            WebRequest request = WebRequest.Create("http://localhost:5000/api/cars/add");
+            // метод
+            request.Method = "POST";
+
+            // формируется запрос и отправляються в масив с кодировкой
+            string postData = JsonConvert.SerializeObject(new
             {
-                webClient.DownloadDataCompleted += AsyncDownloadDataCompleted;
-                Uri uri = new Uri("http://localhost:5000/api/Girls/search");
-                webClient.DownloadDataAsync(uri);
+                Mark = "Mazda",
+                Model = "3",
+                Year = 2015,
+                Fuel = "Бензин",
+                Сapacity = 2.2F,
+                Image = "мазда.jpg"
+            });
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+            // тип даных
+            request.ContentType = "application/json";
+            // длина масива
+            request.ContentLength = byteArray.Length;
+
+            // создается поток
+            Stream dataStream = request.GetRequestStream();
+            // закидывается туда масив
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.
+            dataStream.Close();
+
+            try
+            {
+                // Get the response.
+                WebResponse response = request.GetResponse();
+                // Display the status.
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+                // Get the stream containing content returned by the server.
+                // The using block ensures the stream is automatically closed.
+                using (dataStream = response.GetResponseStream())
+                {
+                    // Open the stream using a StreamReader for easy access.
+                    StreamReader reader = new StreamReader(dataStream);
+                    // Read the content.
+                    string responseFromServer = reader.ReadToEnd();
+                    // Display the content.
+                    Console.WriteLine(responseFromServer);
+                }
+
+                // Close the response.
+                response.Close();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+            InitializeComponent();
+
+            //InitializeComponent();
+            ////AddGirlDataGrid();//подгружаем при инициализации
+            //using (WebClient webClient = new WebClient())
+            //{
+            //    webClient.DownloadDataCompleted += AsyncDownloadDataCompleted;
+            //    Uri uri = new Uri("http://localhost:5000/api/Girls/search");
+            //    webClient.DownloadDataAsync(uri);
+            //}
         }
 
-        private  void Window_Loaded(object sender, RoutedEventArgs e)//асинхронный запуск
+        private  void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            //Thread.Sleep(3000);
-            //AddGirlDataGridAsync();
+            
 
         }
        
-        //public void AddGirlDataGrid()
-        //{
-        //    Thread.Sleep(5000);
-        //    WebClient webClient = new WebClient();
-        //    string reply = webClient.DownloadString(URI);
-
-
-        //    List<GirlVM> add_girls = JsonConvert.DeserializeObject<List<GirlVM>>(reply);
-        //    dgSimple.ItemsSource = new ObservableCollection<GirlVM>(add_girls);
-
-        //}
-        //public Task AddGirlDataGridAsync()
-        //{
-        //    return Task.Run(() => AddGirlDataGrid());
-        //}
+        
         public void AsyncDownloadDataCompleted(Object sender, DownloadDataCompletedEventArgs e)
         {
             string result = Encoding.Default.GetString(e.Result);
