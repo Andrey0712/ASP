@@ -30,6 +30,39 @@ namespace Wpf.Client
         
         public MainWindow()
         {
+            InitializeComponent();
+
+            
+            //AddGirlDataGrid();//подгружаем при инициализации
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.DownloadDataCompleted += AsyncDownloadDataCompleted;
+                Uri uri = new Uri("http://localhost:5000/api/Cars/search");
+                webClient.DownloadDataAsync(uri);
+            }
+
+           
+
+
+           
+        }
+
+        private  void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            
+
+        }
+       
+        
+        public void AsyncDownloadDataCompleted(Object sender, DownloadDataCompletedEventArgs e)
+        {
+            string result = Encoding.Default.GetString(e.Result);
+            var cars = JsonConvert.DeserializeObject<List<CarVM>>(result);
+            dgSimple.ItemsSource = cars;
+        }
+        public void AddCar()
+        {
             // отправляем запрос по вебу
             WebRequest request = WebRequest.Create("http://localhost:5000/api/cars/add");
             // метод
@@ -85,33 +118,21 @@ namespace Wpf.Client
             {
                 MessageBox.Show(ex.Message);
             }
-
-
-            InitializeComponent();
-
-            //InitializeComponent();
-            ////AddGirlDataGrid();//подгружаем при инициализации
-            //using (WebClient webClient = new WebClient())
-            //{
-            //    webClient.DownloadDataCompleted += AsyncDownloadDataCompleted;
-            //    Uri uri = new Uri("http://localhost:5000/api/Girls/search");
-            //    webClient.DownloadDataAsync(uri);
-            //}
+        }
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() => AddCar());
+            MessageBox.Show("+1 Car");
         }
 
-        private  void Window_Loaded(object sender, RoutedEventArgs e)
+        private void btnEdt_Click(object sender, RoutedEventArgs e)
         {
-
-            
 
         }
-       
-        
-        public void AsyncDownloadDataCompleted(Object sender, DownloadDataCompletedEventArgs e)
+
+        private void btnDell_Click(object sender, RoutedEventArgs e)
         {
-            string result = Encoding.Default.GetString(e.Result);
-            var girls = JsonConvert.DeserializeObject<List<GirlVM>>(result);
-            dgSimple.ItemsSource = girls;
+
         }
     }
 }
