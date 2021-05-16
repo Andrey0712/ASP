@@ -129,10 +129,43 @@ namespace Wpf.Client
         {
 
         }
-
+        public long _id { get; set; }
         private void btnDell_Click(object sender, RoutedEventArgs e)
         {
+            //_id = long.Parse(txtNumbCars.ToString());
 
+            if (dgSimple.SelectedItem != null)
+            {
+                if (dgSimple.SelectedItem is CarVM)
+                {
+                    var carDEll = dgSimple.SelectedItem as CarVM;
+                    long id = carDEll.Id;
+                    _id = id;
+                    MessageBox.Show(_id.ToString());
+                }
+            }
+            Task.Run(() => Dell_Carr());
+        }
+
+        public void Dell_Carr()
+        {
+            WebRequest request = WebRequest.Create($"http://localhost:5000/api/Cars/del{_id}");
+            {
+                request.Method = "DELETE";
+
+                try
+                {
+                    request.GetResponse();
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                   
+                }
+
+            };
         }
     }
 }

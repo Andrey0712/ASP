@@ -36,6 +36,25 @@ namespace WebGallery.Controllers
             _context.SaveChanges();
             return Ok(new { message = "Додано" });
         }
+       
+        #region Delete
+        [HttpDelete("{id}")]
+        [Route("del")]
+        public IActionResult Delete(long id)
+        {
+            var del_item = _context.Cars.Find(id);
 
+            if (del_item == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cars.Remove(del_item);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        #endregion
     }
 }
