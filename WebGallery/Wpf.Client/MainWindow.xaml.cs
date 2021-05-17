@@ -140,7 +140,7 @@ namespace Wpf.Client
            
         }
 
-        public void Dell_Carr()
+        public void Dell_Carr()//https://stackoverflow.com/questions/2893194/restful-http-delete-method-in-net
         {
            
             WebRequest request = WebRequest.Create($"http://localhost:5000/api/Cars/del/{_id}");
@@ -149,11 +149,9 @@ namespace Wpf.Client
 
                 try
                 {
-                    WebResponse response = request.GetResponse();
-                    //var del_item = _context.Cars.Find(_id);
-                  
-                    //_context.Cars.Remove(del_item);
-                    //_context.SaveChanges();
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    //WebResponse response = request.GetResponse();
+                   
 
                 }
                 catch (Exception ex)
