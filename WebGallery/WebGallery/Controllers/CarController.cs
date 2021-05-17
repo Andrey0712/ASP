@@ -36,13 +36,13 @@ namespace WebGallery.Controllers
             _context.SaveChanges();
             return Ok(new { message = "Додано" });
         }
-       
+
         #region Delete
         [HttpDelete]
         [Route("del")]
-        public IActionResult DeleteCar(long id)
+        public IActionResult DeleteCar(long _id)
         {
-            var del_item = _context.Cars.Find(id);
+            var del_item = _context.Cars.Find(_id);
 
             if (del_item == null)
             {

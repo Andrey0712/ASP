@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebGallery.Entities;
 using WebGallery.Models;
 
 namespace Wpf.Client
@@ -27,7 +28,7 @@ namespace Wpf.Client
     public partial class MainWindow : Window//https://coderoad.ru/41441089/%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-JsonConvert-DeserializeObject-%D0%B4%D0%BB%D1%8F-%D0%B4%D0%B5%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-Json
     {
         //String URI = "http://localhost:64098/api/Girls/search";
-        
+        private readonly EFDataContext _context;
         public MainWindow()
         {
             InitializeComponent();
@@ -134,6 +135,37 @@ namespace Wpf.Client
         {
             //_id = long.Parse(txtNumbCars.ToString());
 
+             Search_user();
+            Task.Run(() => Dell_Carr());
+           
+        }
+
+        public void Dell_Carr()
+        {
+           
+            WebRequest request = WebRequest.Create($"http://localhost:5000/api/Cars/del/{_id}");
+            {
+                request.Method = "DELETE";
+
+                try
+                {
+                    WebResponse response = request.GetResponse();
+                    //var del_item = _context.Cars.Find(_id);
+                  
+                    //_context.Cars.Remove(del_item);
+                    //_context.SaveChanges();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                   
+                }
+
+            };
+        }
+        public void Search_user()
+        {
             if (dgSimple.SelectedItem != null)
             {
                 if (dgSimple.SelectedItem is CarVM)
@@ -144,28 +176,6 @@ namespace Wpf.Client
                     MessageBox.Show(_id.ToString());
                 }
             }
-            Task.Run(() => Dell_Carr());
-        }
-
-        public void Dell_Carr()
-        {
-            WebRequest request = WebRequest.Create($"http://localhost:5000/api/Cars/del{_id}");
-            {
-                request.Method = "DELETE";
-
-                try
-                {
-                    request.GetResponse();
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                   
-                }
-
-            };
         }
     }
 }
