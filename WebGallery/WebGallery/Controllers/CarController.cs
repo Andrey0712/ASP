@@ -38,9 +38,9 @@ namespace WebGallery.Controllers
         }
        
         #region Delete
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [Route("del")]
-        public IActionResult Delete(long id)
+        public IActionResult DeleteCar(long id)
         {
             var del_item = _context.Cars.Find(id);
 
