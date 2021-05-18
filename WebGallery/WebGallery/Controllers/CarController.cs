@@ -77,7 +77,7 @@ namespace WebGallery.Controllers
                 _context.SaveChanges();
             }
 
-            return Ok(new { result = "Отредактированно" });
+            return Ok(new { result = $"Отредактированно автомобиль под ID № {_id}" });
         }
     }
 }

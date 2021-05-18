@@ -27,6 +27,8 @@ namespace Wpf.Client
     /// </summary>
     public partial class MainWindow : Window//https://coderoad.ru/41441089/%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-JsonConvert-DeserializeObject-%D0%B4%D0%BB%D1%8F-%D0%B4%D0%B5%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-Json
     {
+        public long _id { get; set; }
+        
         //String URI = "http://localhost:64098/api/Girls/search";
         private readonly EFDataContext _context;
         public MainWindow()
@@ -128,14 +130,16 @@ namespace Wpf.Client
 
         private void btnEdt_Click(object sender, RoutedEventArgs e)
         {
-
+            Search_user();
+            AddCarWindow edit_Car = new AddCarWindow(_id, _context);
+            edit_Car.ShowDialog();
         }
-        public long _id { get; set; }
+       
         private async void btnDell_Click(object sender, RoutedEventArgs e)
         {
-            //_id = long.Parse(txtNumbCars.ToString());
-
-             Search_user();
+            _id = long.Parse(txtNumbCars.Text);
+            MessageBox.Show(_id.ToString());
+            //Search_user();
             await Task.Run(() => Dell_Carr());
            
         }
@@ -169,8 +173,8 @@ namespace Wpf.Client
                 if (dgSimple.SelectedItem is CarVM)
                 {
                     var carDEll = dgSimple.SelectedItem as CarVM;
-                    long id = carDEll.Id;
-                    _id = id;
+                    
+                    _id = carDEll.Id; 
                     MessageBox.Show(_id.ToString());
                 }
             }
