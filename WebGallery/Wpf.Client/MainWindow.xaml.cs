@@ -131,12 +131,12 @@ namespace Wpf.Client
 
         }
         public long _id { get; set; }
-        private void btnDell_Click(object sender, RoutedEventArgs e)
+        private async void btnDell_Click(object sender, RoutedEventArgs e)
         {
             //_id = long.Parse(txtNumbCars.ToString());
 
              Search_user();
-            Task.Run(() => Dell_Carr());
+            await Task.Run(() => Dell_Carr());
            
         }
 

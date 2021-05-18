@@ -37,24 +37,47 @@ namespace WebGallery.Controllers
             return Ok(new { message = "Додано" });
         }
 
-        #region Delete
+        
         [HttpDelete]
         [Route("del")]
         public IActionResult DeleteCar(long _id)
         {
-            var del_item = _context.Cars.Find(_id);
+            var del_car = _context.Cars.FirstOrDefault(x => x.Id == _id);
 
-            if (del_item == null)
+            if (del_car!= null)
             {
-                return NotFound();
+                _context.Cars.Remove(del_car);
+            _context.SaveChanges();
+               
             }
 
-            _context.Cars.Remove(del_item);
-            _context.SaveChanges();
+            return Ok(new { message = "Удалено" });
 
-            return NoContent();
+            
         }
 
-        #endregion
+        [HttpPut]
+        [Route("edit")]
+        public IActionResult Update( [FromBody] Car car, long _id)
+        {
+
+            
+            var res = _context.Cars.FirstOrDefault(x => x.Id == _id);
+
+            if (res != null)
+            {
+                
+                res.Mark = car.Mark;
+                res.Model = car.Model;
+                res.Image = car.Image;
+                res.Fuel = car.Fuel;
+                res.Сapacity = car.Сapacity;
+                res.Year = car.Year;
+               
+                _context.SaveChanges();
+            }
+
+            return Ok(new { result = "Отредактированно" });
+        }
     }
 }
