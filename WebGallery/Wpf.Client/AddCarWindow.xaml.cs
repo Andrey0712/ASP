@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WebGallery.Entities;
+using Wpf.Client.Models.Car.Validation;
 
 namespace Wpf.Client
 {
@@ -78,7 +79,7 @@ namespace Wpf.Client
                 chang_Car.Image = fileSave;
             }
             // отправляем запрос по вебу
-            WebRequest request = WebRequest.Create("http://localhost:5000/api/cars/edit/{_id}");
+            WebRequest request = WebRequest.Create("http://localhost:5000/api/cars/edit?id=_id");
             // метод
             request.Method = "PUT";
 
@@ -132,6 +133,25 @@ namespace Wpf.Client
 
                 // Close the response.
                 response.Close();
+            }
+            catch (WebException e)
+            {
+                using (WebResponse response = e.Response)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)response;
+                    MessageBox.Show("Error code: " + httpResponse.StatusCode);
+                    using (Stream data = response.GetResponseStream())
+                    using (var reader = new StreamReader(data))
+                    {
+                        string text = reader.ReadToEnd();
+                        var errors = JsonConvert.DeserializeObject<AddCarValidation>(text);
+                        MessageBox.Show(text);
+                        MessageBox.Show(errors.Errors.Mark[0]);
+                        MessageBox.Show(errors.Errors.Model[0]);
+                        MessageBox.Show(errors.Errors.Year[0]);
+                        MessageBox.Show(errors.Errors.Fuel[0]);
+                    }
+                }
             }
             catch (Exception ex)
             {

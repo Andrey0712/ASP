@@ -30,19 +30,30 @@ namespace WebGallery.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IActionResult AddCar([FromBody] Car car)
+        public IActionResult AddCar([FromBody]  CarViewModels car)
         {
-            _context.Cars.Add(car);
-            _context.SaveChanges();
+            var rez = new Car
+            {
+            Mark = car.Mark,
+            Model = car.Model,
+            Image = car.Image,
+            Fuel = car.Fuel,
+            Сapacity = car.Сapacity,
+            Year = car.Year
+
+        };
+           _context.Cars.Add(rez);
+           _context.SaveChanges();
             return Ok(new { message = "Додано" });
         }
 
         
         [HttpDelete]
         [Route("del")]
-        public IActionResult DeleteCar(long _id)
+        
+        public IActionResult DeleteCar(long id)
         {
-            var del_car = _context.Cars.FirstOrDefault(x => x.Id == _id);
+            var del_car = _context.Cars.FirstOrDefault(x => x.Id == id);
 
             if (del_car!= null)
             {
@@ -58,11 +69,11 @@ namespace WebGallery.Controllers
 
         [HttpPut]
         [Route("edit")]
-        public IActionResult Update( [FromBody] Car car, long _id)
+        public IActionResult Update( [FromBody] CarViewModels car, long id)
         {
 
             
-            var res = _context.Cars.FirstOrDefault(x => x.Id == _id);
+            var res = _context.Cars.FirstOrDefault(x => x.Id == id);
 
             if (res != null)
             {
@@ -77,7 +88,7 @@ namespace WebGallery.Controllers
                 _context.SaveChanges();
             }
 
-            return Ok(new { result = $"Отредактированно автомобиль под ID № {_id}" });
+            return Ok(new { result = $"Отредактированно автомобиль под ID № {id}" });
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf.Client"
         mc:Ignorable="d"
-        Title="AddCarWindow" Height="300" Width="400">
+        Title="AddCarWindow" Height="300" Width="597">
     <Canvas Background="#FFD6B2B2">
         <Canvas.Resources>
             <Style TargetType="Button">
