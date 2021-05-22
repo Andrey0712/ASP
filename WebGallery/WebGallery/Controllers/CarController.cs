@@ -30,24 +30,32 @@ namespace WebGallery.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IActionResult AddCar([FromBody]  CarViewModels car)
+        public IActionResult AddCar([FromBody] CarViewModels car)
         {
             var rez = new Car
             {
-            Mark = car.Mark,
-            Model = car.Model,
-            Image = car.Image,
-            Fuel = car.Fuel,
-            Сapacity = car.Сapacity,
-            Year = car.Year
+                Mark = car.Mark,
+                Model = car.Model,
+                Image = car.Image,
+                Fuel = car.Fuel,
+                Сapacity = car.Сapacity,
+                Year = car.Year
 
-        };
-           _context.Cars.Add(rez);
-           _context.SaveChanges();
+            };
+            _context.Cars.Add(rez);
+            _context.SaveChanges();
             return Ok(new { message = "Додано" });
         }
 
-        
+        //[HttpPost]
+        //[Route("add")]
+        //public IActionResult AddCar([FromBody] CarViewModels car)
+        //{
+        //    _context.Cars.Add(car);
+        //    _context.SaveChanges();
+        //    return Ok(new { message = "Was added" });
+        //}
+
         [HttpDelete]
         [Route("del")]
         
