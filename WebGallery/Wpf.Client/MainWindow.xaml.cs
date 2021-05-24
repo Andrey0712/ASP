@@ -146,7 +146,7 @@ namespace Wpf.Client
         }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Post_Window edit_Car = new Post_Window( _context);
+            Post_Window edit_Car = new Post_Window( );
             edit_Car.ShowDialog();
             //Task.Run(() => AddCar());
             MessageBox.Show("+1 Car");

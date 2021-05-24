@@ -22,5 +22,9 @@ namespace Wpf.Client.Models.Car.Validation
         {
             public ErrorsAddCar Errors { get; set; }
         }
-   
+    public class GetAllErrors
+    {
+        public string GetAllError { get; set; }
+    }
+
 }

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -31,14 +32,13 @@ namespace Wpf.Client
         private string file_selected = string.Empty;
         public string file_name { get; set; }
         public static string New_FileName { get; set; }
-        private readonly EFDataContext _context;
         
 
-        public Post_Window( EFDataContext context)
+        public Post_Window( )
         {
             InitializeComponent();
            
-            _context = context;
+            
         }
 
         private void btnSelectImage_Click(object sender, RoutedEventArgs e)
@@ -101,29 +101,42 @@ namespace Wpf.Client
             }
             catch (WebException e)
             {
-                using (WebResponse response = e.Response)
-                {
-                    HttpWebResponse httpResponse = (HttpWebResponse)response;
-                    MessageBox.Show("Error code: " + httpResponse.StatusCode);
-                    using (Stream data = response.GetResponseStream())
-                    using (var reader = new StreamReader(data))
-                    {
-                        string text = reader.ReadToEnd();
-                        var errors = JsonConvert.DeserializeObject<AddCarValidation>(text);
-                        MessageBox.Show(text);
-                        MessageBox.Show(errors.Errors.Mark[0]);
-                        MessageBox.Show(errors.Errors.Model[0]);
-                        MessageBox.Show(errors.Errors.Year[0]);
-                        MessageBox.Show(errors.Errors.Fuel[0]);
-                        return false;
-                    }
-                }
+                                
+                using WebResponse response = e.Response;
+                HttpWebResponse httpResponse = (HttpWebResponse)response;
+                MessageBox.Show("Error code: " + httpResponse.StatusCode);
+                using Stream data = response.GetResponseStream();
+                using var reader = new StreamReader(data);
+                
+                    string text = reader.ReadToEnd();
+                    var errors = JsonConvert.DeserializeObject<AddCarValidation>(text);
+                    MessageBox.Show(text);
+                    //MessageBox.Show(errors.Errors.Mark[0]);
+                    //MessageBox.Show(errors.Errors.Model[0]);
+                    //MessageBox.Show(errors.Errors.Year[0]);
+                    //MessageBox.Show(errors.Errors.Fuel[0]);
+                    if (errors.Errors.Mark != null)
+                       lbMark.Content = errors.Errors.Mark[0].ToString();
+                       
+                    if (errors.Errors.Model != null)
+                       lbModel.Content = errors.Errors.Model[0].ToString();
+
+                    if (errors.Errors.Year != null)
+                       lbYear.Content = int.Parse(errors.Errors.Year[0]).ToString();
+
+                    if (errors.Errors.Fuel != null)
+                        lbFuel.Content = errors.Errors.Fuel[0].ToString();
+
+                    return false;
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
                 return false;
             }
+            
         }
+        
     }
 }

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf.Client"
         mc:Ignorable="d"
-         Title="AddCarWindow" Height="300" Width="597">
-    <Canvas Background="#FFD6B2B2">
+         Title="AddCarWindow" Height="300" Width="600">
+    <Canvas Background="#FFD6B2B2" Margin="0,0,0,-6">
         <Canvas.Resources>
             <Style TargetType="Button">
                 <Setter Property="Foreground" Value="DarkRed" />
@@ -36,16 +36,17 @@
                        Width="230" />
             <TextBox x:Name="tbMark" 
                          Text="{Binding Mark, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                    Width="158">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <AdornedElementPlaceholder x:Name="textBox"/>
-                            <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                        </StackPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-            </TextBox>
+                    Width="158"/>
+            <Label x:Name="lbMark" HorizontalAlignment="Center" Content="" Width="200" Foreground="Red"/>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+
         </WrapPanel>
         <WrapPanel Margin="5"  Canvas.Top="40">
             <Label Content="Введите модель автомобиля :" 
@@ -58,6 +59,7 @@
                     UpdateSourceTrigger=PropertyChanged, 
                     ValidatesOnDataErrors=True}"
                     Width="158">
+                
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -67,6 +69,7 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
+            <Label x:Name="lbModel" HorizontalAlignment="Center" Content="" Width="200" Foreground="Red"/>
         </WrapPanel>
         <WrapPanel Margin="5"  Canvas.Top="80">
 
@@ -80,6 +83,7 @@
                     UpdateSourceTrigger=PropertyChanged, 
                     ValidatesOnDataErrors=True}"
                     Width="158">
+                
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -89,6 +93,7 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
+            <Label x:Name="lbYear" HorizontalAlignment="Center" Content="" Width="200" Foreground="Red"/>
         </WrapPanel>
         <WrapPanel Margin="5"  Canvas.Top="120">
 
@@ -102,15 +107,17 @@
                     UpdateSourceTrigger=PropertyChanged, 
                     ValidatesOnDataErrors=True}"
                     Width="158">
+                
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <StackPanel Orientation="Horizontal">
                             <AdornedElementPlaceholder x:Name="textBox"/>
-                            <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
                         </StackPanel>
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
+            <Label x:Name="lbFuel" HorizontalAlignment="Center" Content="" Width="200" Foreground="Red"/>
         </WrapPanel>
         <WrapPanel Margin="5"  Canvas.Top="160">
 
@@ -124,6 +131,7 @@
                     UpdateSourceTrigger=PropertyChanged, 
                     ValidatesOnDataErrors=True}"
                     Width="158">
+                
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -133,6 +141,7 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
+            <Label x:Name="lbMark_Copy" HorizontalAlignment="Center" Content="" Width="200" Foreground="Red"/>
         </WrapPanel>
         <Button x:Name="Chang_foto" Width="120"
                         Content="Обновить фото" 
@@ -140,7 +149,6 @@
         <Button x:Name="Save_Changes" Width="149"
                         Content="Сохранить изменения" 
                         Click="btnSaveChangs_Click" Canvas.Left="235" Canvas.Top="220"/>
-
-
+        
     </Canvas>
 </Window>
